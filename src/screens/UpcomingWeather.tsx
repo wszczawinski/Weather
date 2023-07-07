@@ -21,12 +21,9 @@ function UpcomingWeather({ weatherForecast }: { weatherForecast: IHourly }) {
   const forecastElements = weatherForecast?.time?.map((item, index) => {
     return {
       time: item,
-      temperature_2m: weatherForecast?.temperature_2m
-        ? weatherForecast?.temperature_2m[index]
-        : 0,
-      windspeed_10m: weatherForecast?.windspeed_10m
-        ? weatherForecast?.windspeed_10m[index]
-        : 0
+      temperature_2m: weatherForecast?.temperature_2m[index],
+      windspeed_10m: weatherForecast?.windspeed_10m[index],
+      weatherCode: weatherForecast?.weathercode[index]
     }
   })
 
@@ -36,6 +33,7 @@ function UpcomingWeather({ weatherForecast }: { weatherForecast: IHourly }) {
         time={forecast.time}
         windspeed_10m={forecast.windspeed_10m}
         temperature_2m={forecast.temperature_2m}
+        weatherCode={forecast.weatherCode}
       />
     )
   }

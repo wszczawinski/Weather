@@ -2,7 +2,9 @@ export interface IForecast {
   time: string
   temperature_2m: number
   windspeed_10m: number
+  weatherCode: number
 }
+
 export interface IWeather {
   latitude: number
   longitude: number
@@ -15,6 +17,7 @@ export interface IWeather {
   hourly_units: IHourlyUnits
   hourly: IHourly
 }
+
 export interface ICurrentWeather {
   temperature: number
   windspeed: number
@@ -23,6 +26,7 @@ export interface ICurrentWeather {
   is_day: number
   time: string
 }
+
 export interface IHourlyUnits {
   time: string
   temperature_2m: string
@@ -31,11 +35,13 @@ export interface IHourlyUnits {
   cloudcover: string
   windspeed_10m: string
 }
+
 export interface IHourly {
-  time?: string[] | null
-  temperature_2m?: number[] | null
-  precipitation_probability?: number[] | null
-  rain?: number[] | null
-  cloudcover?: number[] | null
-  windspeed_10m?: number[] | null
+  time: string[]
+  temperature_2m: number[]
+  precipitation_probability: number[]
+  rain: number[]
+  cloudcover: number[]
+  windspeed_10m: number[]
+  weathercode: number[]
 }
