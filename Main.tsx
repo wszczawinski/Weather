@@ -1,20 +1,20 @@
+import { useEffect, useState } from 'react'
+import { Accuracy, LocationObject } from 'expo-location'
 import { ActivityIndicator, StyleSheet, SafeAreaView, Text } from 'react-native'
-import { useQuery } from '@tanstack/react-query'
 import { NavigationContainer } from '@react-navigation/native'
+import { useQuery } from '@tanstack/react-query'
 
 import * as Location from 'expo-location'
 
 import { Tabs } from './src/layout'
-import { IWeather } from './src/types'
-import { useEffect, useState } from 'react'
-import { LocationObject } from 'expo-location'
+import { fetchWeather } from './src/helpers'
 
 function Main() {
   const [location, setLocation] = useState<LocationObject | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         setError('Permission to access location was denied')
@@ -22,20 +22,11 @@ function Main() {
       }
 
       const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Lowest
+        accuracy: Accuracy.Lowest
       })
       setLocation(location)
     })()
   }, [])
-
-  const feachWeather = async (
-    latitude: number,
-    longitude: number
-  ): Promise<IWeather> => {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation_probability,rain,cloudcover,windspeed_10m&current_weather=true`
-    const res = await fetch(url)
-    return res.json()
-  }
 
   const {
     data: weather,
@@ -44,7 +35,7 @@ function Main() {
   } = useQuery({
     queryFn: () =>
       location?.coords.latitude && location?.coords?.longitude
-        ? feachWeather(location?.coords.latitude, location?.coords?.longitude)
+        ? fetchWeather(location?.coords.latitude, location?.coords?.longitude)
         : null,
     queryKey: ['weather'],
     enabled: !!location
