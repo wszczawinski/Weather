@@ -34,6 +34,8 @@ function UpcomingWeather({ weatherForecast }: { weatherForecast: IHourly }) {
         windspeed_10m={forecast.windspeed_10m}
         temperature_2m={forecast.temperature_2m}
         weatherCode={forecast.weatherCode}
+        minTemp={Math.min(...weatherForecast.temperature_2m)}
+        maxTemp={Math.max(...weatherForecast.temperature_2m)}
       />
     )
   }
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   forecastSeparatorItem: {
-    height: 10
+    height: 8
   }
 })
 
