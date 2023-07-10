@@ -2,6 +2,11 @@
   Weather Mobile App
 </h2>
 
+<p align="center">  
+  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/src/images/WeatherMain.PNG" width="240" /> 
+  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/src/images/WeatherForecast.PNG" width="240" /></p> 
+
+
 <p align="center">
     <p>A weather application for mobile devices that presents only the most necessary weather information based on the device's location.</p>
     <p>The current weather screen presents a quick overview of current conditions, and the weather forecast screen presents hourly change information with a temperature indicator.</p>
