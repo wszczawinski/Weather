@@ -3,6 +3,7 @@ import { Accuracy, LocationObject } from 'expo-location'
 import { ActivityIndicator, StyleSheet, SafeAreaView, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
+import { Feather } from '@expo/vector-icons'
 
 import * as Location from 'expo-location'
 
@@ -11,14 +12,16 @@ import { fetchWeather } from './src/helpers'
 
 function Main() {
   const [location, setLocation] = useState<LocationObject | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [locationError, setLocationError] = useState<boolean | null>(null)
 
   useEffect(() => {
     ;(async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
-        setError('Permission to access location was denied')
+        setLocationError(true)
         return
+      } else {
+        setLocationError(false)
       }
 
       const location = await Location.getCurrentPositionAsync({
@@ -41,7 +44,7 @@ function Main() {
     enabled: !!location
   })
 
-  if (isLoading) {
+  if (isLoading || locationError === null) {
     return (
       <SafeAreaView style={styles.wrapper}>
         <ActivityIndicator size={'large'} color={'white'} />
@@ -49,9 +52,27 @@ function Main() {
     )
   }
 
-  return !weather || isError || error ? (
+  if (locationError) {
+    return (
+      <SafeAreaView style={styles.wrapper}>
+        <Text style={styles.text}>
+          {'Permission to access location was denied'}
+        </Text>
+        <Feather name={'alert-octagon'} size={24} color="white" />
+        <Text style={styles.text}>{'Enable location to check weather'}</Text>
+      </SafeAreaView>
+    )
+  }
+
+  return !weather || isError ? (
     <SafeAreaView style={styles.wrapper}>
-      <Text style={styles.text}>{error || 'No data'} </Text>
+      <Text style={styles.text}>
+        {'Oops! Something went wrong with fetching the data'}
+      </Text>
+      <Feather name={'zap-off'} size={24} color="white" />
+      <Text style={styles.text}>
+        {'Please try again later or check your internet connection'}
+      </Text>
     </SafeAreaView>
   ) : (
     <NavigationContainer>
@@ -64,10 +85,12 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: 'black',
     justifyContent: 'center',
+    alignItems: 'center',
     flex: 1
   },
   text: {
-    color: 'white'
+    color: 'white',
+    padding: 20
   }
 })
 
