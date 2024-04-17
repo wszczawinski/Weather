@@ -15,7 +15,7 @@ function Tabs({ weather }: { weather: IWeather }) {
       activeColor="white"
     >
       <Tab.Screen
-        name={'Today'}
+        name={'Current'}
         children={() => <CurrentWeather weather={weather} />}
         options={{
           tabBarIcon: ({ color }) => (

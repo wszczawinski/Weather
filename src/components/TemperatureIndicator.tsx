@@ -13,7 +13,7 @@ function TemperatureIndicator({
 }: ITemperatureIndicator) {
   const indicatorLength = 40
   const position = Math.floor(
-    indicatorLength * ((temperature - minTemp) / (maxTemp - minTemp))
+    (indicatorLength - 1) * ((temperature - minTemp) / (maxTemp - minTemp))
   )
 
   let indicatorElements = []
@@ -23,21 +23,19 @@ function TemperatureIndicator({
 
   const indicatorString = indicatorElements.join('')
 
-  return (
-    <Text
-      style={
-        temperature > 24
-          ? styles.textOrange
-          : temperature > 15
-          ? styles.textYellow
-          : temperature > 6
-          ? styles.textGreen
-          : styles.textBlue
-      }
-    >
-      {indicatorString}
-    </Text>
-  )
+  const getTemperatureStyle = () => {
+    if (temperature > 24) {
+      return styles.textOrange
+    } else if (temperature > 15) {
+      return styles.textYellow
+    } else if (temperature > 6) {
+      return styles.textGreen
+    } else {
+      return styles.textBlue
+    }
+  }
+
+  return <Text style={getTemperatureStyle()}>{indicatorString}</Text>
 }
 
 const styles = StyleSheet.create({
