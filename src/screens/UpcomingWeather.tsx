@@ -23,7 +23,8 @@ function UpcomingWeather({ weatherForecast }: { weatherForecast: IHourly }) {
       time: item,
       temperature_2m: weatherForecast?.temperature_2m[index],
       windspeed_10m: weatherForecast?.windspeed_10m[index],
-      weatherCode: weatherForecast?.weathercode[index]
+      weatherCode: weatherForecast?.weathercode[index],
+      pressure: weatherForecast?.surface_pressure[index]
     }
   })
 
@@ -36,6 +37,7 @@ function UpcomingWeather({ weatherForecast }: { weatherForecast: IHourly }) {
         weatherCode={forecast.weatherCode}
         minTemp={Math.min(...weatherForecast.temperature_2m)}
         maxTemp={Math.max(...weatherForecast.temperature_2m)}
+        pressure={forecast.pressure}
       />
     )
   }

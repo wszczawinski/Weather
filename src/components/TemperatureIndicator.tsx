@@ -11,7 +11,7 @@ function TemperatureIndicator({
   maxTemp,
   temperature
 }: ITemperatureIndicator) {
-  const indicatorLength = 40
+  const indicatorLength = 24
   const position = Math.floor(
     (indicatorLength - 1) * ((temperature - minTemp) / (maxTemp - minTemp))
   )

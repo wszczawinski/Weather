@@ -17,7 +17,8 @@ const ForecastItem = ({
   windspeed_10m,
   weatherCode,
   minTemp,
-  maxTemp
+  maxTemp,
+  pressure
 }: IForecastItem) => {
   const getDay = () =>
     moment(time).format('HH') === '00' && (
@@ -51,6 +52,9 @@ const ForecastItem = ({
         <View style={styles.forecastInfoElement}>
           <Text style={[styles.temp, styles.textWhite]}>
             {` ${Math.round(temperature_2m)} °C`}
+          </Text>
+          <Text style={[styles.pressure, styles.textWhite]}>
+            {` ${Math.round(pressure)} hPa`}
           </Text>
           <Text style={[styles.wind, styles.textWhite]}>
             <Feather name={'wind'} size={16} color="white" />
@@ -93,6 +97,10 @@ const styles = StyleSheet.create({
   },
   temp: {
     width: 45,
+    display: 'flex'
+  },
+  pressure: {
+    width: 65,
     display: 'flex'
   },
   wind: {

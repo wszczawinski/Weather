@@ -3,6 +3,7 @@ export interface IForecast {
   temperature_2m: number
   windspeed_10m: number
   weatherCode: number
+  pressure: number
 }
 
 export interface IWeather {
@@ -44,4 +45,5 @@ export interface IHourly {
   cloudcover: number[]
   windspeed_10m: number[]
   weathercode: number[]
+  surface_pressure: number[]
 }
