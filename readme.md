@@ -3,14 +3,15 @@
 </h2>
 
 <p align="center">  
-  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/src/images/WeatherMain.PNG" width="240" /> 
-  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/src/images/WeatherForecast.PNG" width="240" /></p> 
+  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/images/WeatherMain.PNG" width="240" /> 
+  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/images/WeatherForecast.PNG" width="240" />
+</p> 
 
 ## Stack
-- Expo
-- TypeScript
 - React Native
-- Tanstack React Query 
+- TypeScript
+- Tanstack Query 
+- Expo
 - Vercel
 
 <p align="center">
@@ -25,5 +26,5 @@
 git clone https://github.com/wszczawinski/Weather.git
 cd Weather
 npm install
-npm start
+npm run start
 ```
