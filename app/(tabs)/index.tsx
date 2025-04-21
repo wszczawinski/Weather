@@ -1,13 +1,14 @@
 import { useContext } from "react";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 import { SafeAreaView, StyleSheet } from "react-native";
+import moment from "moment";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { WeatherIcon } from "@/components/WeatherIcon";
-import { LocationContext, LocationStatus } from "@/contexts/LocationContext";
 import { NoDataScreen } from "@/components/NoDataScreen";
+import { LocationContext, LocationStatus } from "@/contexts/LocationContext";
 
 export default function CurrentWeather() {
   const { location, status: locationStatus } = useContext(LocationContext);
@@ -20,39 +21,81 @@ export default function CurrentWeather() {
     longitude: location.longitude,
     enabled: locationStatus === LocationStatus.READY
   })
+  console.log("🚀 -> CurrentWeather -> weather:", weather)
 
   if (!weather || isError) {
     return <NoDataScreen />
   }
 
-  const { current_weather: currentWeather, elevation } = weather;
-  const styles = style(currentWeather.winddirection)
+  const { current: currentWeather, elevation, current_units: units, daily, daily_units } = weather;
+  const styles = style(currentWeather.wind_direction_10m)
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <ThemedView style={styles.container}>
+        <ThemedText style={styles.row}>
+          <Feather name="sunrise" size={24} />
+          {moment(daily.sunrise[0]).format("HH:mm")}
+
+          <ThemedText >
+            <Feather name="arrow-left" size={16} />
+            {moment.utc(daily.daylight_duration[0] * 1000).format("HH:mm")}
+            <Feather name="arrow-right" size={16} />
+          </ThemedText>
+
+          {moment(daily.sunset[0]).format("HH:mm")}
+          <Feather name="sunset" size={24} />
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.container}>
         <WeatherIcon
-          weatherCode={currentWeather.weathercode}
+          weatherCode={currentWeather.weather_code}
           iconSize={100}
           isDay={!!currentWeather.is_day}
         />
-        <ThemedText style={styles.temp}>
-          {currentWeather.temperature} {' °C'}
+
+        <ThemedText type="title_xl">
+          {currentWeather.temperature_2m} {units.temperature_2m}
         </ThemedText>
-        <ThemedView style={styles.wind}>
+
+        <ThemedView style={styles.row}>
           <Feather
             style={styles.windDirection}
             name={'arrow-up-circle'}
-            size={30}
+            size={32}
             color={'white'}
           />
-          <ThemedText style={styles.feels}>
-            {currentWeather.windspeed} {' m/s'}
+          <ThemedText type="title">
+            {currentWeather.wind_speed_10m} {units.wind_speed_10m}
           </ThemedText>
         </ThemedView>
-        <ThemedText style={styles.info}>
-          {elevation} {' m'}
-        </ThemedText>
+      </ThemedView>
+
+      <ThemedView style={styles.container}>
+
+        <ThemedView style={styles.row}>
+          <ThemedText style={styles.row}>
+            <MaterialCommunityIcons name="elevation-rise" size={18} />
+            {elevation} {'m'}
+            <Entypo name="minus" size={16} color="gray" />
+            <AntDesign name="dashboard" size={16} />
+            {Math.round(currentWeather.surface_pressure)} {units.surface_pressure}
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedView style={styles.row}>
+          <ThemedText style={styles.row}>
+            <Entypo name="water" size={12} />
+            {currentWeather.precipitation} {units.precipitation}
+            <Entypo name="minus" size={16} color="gray" />
+            <MaterialCommunityIcons name="weather-partly-cloudy" size={18} />
+            {Math.round(currentWeather.cloud_cover)} {units.cloud_cover}
+          </ThemedText>
+        </ThemedView>
+
+
+
       </ThemedView>
     </SafeAreaView>
   )
@@ -62,43 +105,25 @@ const style = (winddirection: number) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
-      backgroundColor: 'black'
+      justifyContent: 'space-between',
+      alignItems: "center"
     },
     container: {
-      flex: 1,
+      display: "flex",
+      flexDirection: "column",
       alignItems: 'center',
       justifyContent: 'center',
-      gap: 20
+      gap: 20,
+      padding: 20
     },
-    temp: {
-      color: 'white',
-      fontSize: 50
-    },
-    feels: {
-      color: 'white',
-      fontSize: 30,
-      paddingLeft: 20
-    },
-    highLow: {
-      color: 'white',
-      fontSize: 30
-    },
-    additionalInfo: {
-      justifyContent: 'flex-end',
-      paddingHorizontal: 40,
-      paddingVertical: 40
-    },
-    info: {
-      color: 'white',
-      fontSize: 20
-    },
-    wind: {
+    row: {
       display: 'flex',
       flexDirection: 'row',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: "center",
+      gap: 12
     },
     windDirection: {
       transform: [{ rotate: `${winddirection}deg` }],
-      paddingRight: 10
     },
   })

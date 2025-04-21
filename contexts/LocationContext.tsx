@@ -37,8 +37,7 @@ export const LocationContextProvider = ({ children }: { children: ReactNode }) =
             const location = await Location.getCurrentPositionAsync({
                 accuracy: Location.Accuracy.Lowest
             })
-            console.log("🚀 -> getCurrentLocation -> location:", location)
-
+            
             setLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
             setStatus(LocationStatus.READY);
         }

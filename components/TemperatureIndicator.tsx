@@ -39,12 +39,13 @@ export const TemperatureIndicator = ({
 
   const style = temperatureStyles[getTempCategory(temperature)]
 
-  return <ThemedText style={style}>{indicatorString}</ThemedText>
+  return <ThemedText type='small' style={[style, styles.font20]}>{indicatorString}</ThemedText>
 }
 
 const styles = StyleSheet.create({
   textOrange: { color: 'orange' },
   textGreen: { color: 'green' },
   textYellow: { color: 'yellow' },
-  textBlue: { color: 'blue' }
+  textBlue: { color: 'blue' },
+  font20: {fontSize: 20},
 })

@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { Feather } from '@expo/vector-icons'
 import moment from 'moment'
+import { StyleSheet } from 'react-native'
 
 import { TemperatureIndicator } from './TemperatureIndicator'
 import { WeatherIcon } from './WeatherIcon'
+import { ThemedText } from './ThemedText'
+import { ThemedView } from './ThemedView'
 import { Forecast } from '@/types'
 
 interface ForecastItemProps extends Forecast {
@@ -20,49 +21,42 @@ export const ForecastItem = ({
   maxTemp,
   pressure
 }: ForecastItemProps) => {
-  const getDay = () =>
-    moment(time).format('HH') === '00' && (
-      <Text style={[styles.day, styles.textWhite]}>
-        {moment(time).isSame(new Date(), 'day')
-          ? 'Today'
-          : moment(time).format('dddd   DD MMMM')}
-      </Text>
-    )
+  const getDay = () => (moment(time).isSame(new Date(), 'day') ? 'Today' : moment(time).format('dddd   DD MMMM'))
 
-  const getTime = () => `${moment(time).format('HH')} h`
+  const getTime = () => `${moment(time).format('HH')}h`
 
   return (
-    <View style={styles.forecastItem}>
-      {getDay()}
-      <View style={styles.forecastInfo}>
-        <View style={styles.forecastInfoElement}>
+    <ThemedView style={styles.forecastItem}>
+      {moment(time).format('HH') === '00' && <ThemedText style={styles.day}> {getDay()} </ThemedText>}
+
+      <ThemedView style={styles.forecastInfo}>
+        <ThemedView style={styles.forecastInfoElement}>
           <WeatherIcon iconSize={16} weatherCode={weatherCode} />
 
-          <Text style={[styles.textWhite, styles.hour]}>{getTime()}</Text>
+          <ThemedText type='small' style={[styles.hour, styles.mono]}>{getTime()}</ThemedText>
 
-          <View style={styles.indicator}>
+          <ThemedView style={styles.indicator}>
             <TemperatureIndicator
               maxTemp={maxTemp}
               minTemp={minTemp}
               temperature={temperature_2m}
             />
-          </View>
-        </View>
+          </ThemedView>
+        </ThemedView>
 
-        <View style={styles.forecastInfoElement}>
-          <Text style={[styles.temp, styles.textWhite]}>
-            {` ${Math.round(temperature_2m)} °C`}
-          </Text>
-          <Text style={[styles.pressure, styles.textWhite]}>
-            {` ${Math.round(pressure)} hPa`}
-          </Text>
-          <Text style={[styles.wind, styles.textWhite]}>
-            <Feather name={'wind'} size={16} color="white" />
-            {` ${Math.round(windspeed_10m)} m/s`}
-          </Text>
-        </View>
-      </View>
-    </View>
+        <ThemedView style={styles.forecastInfoElement}>
+          <ThemedText type='small' style={[styles.temp, styles.mono]}>
+            {`${Math.round(temperature_2m)}°C`}
+          </ThemedText>
+          <ThemedText type='small' style={[styles.pressure, styles.mono]}>
+            {`${Math.round(pressure)}hPa`}
+          </ThemedText>
+          <ThemedText type='small' style={[styles.wind, styles.mono]}>
+            {`${Math.round(windspeed_10m)}km/h`}
+          </ThemedText>
+        </ThemedView>
+      </ThemedView>
+    </ThemedView>
   )
 }
 
@@ -73,7 +67,7 @@ const styles = StyleSheet.create({
     gap: 10,
     marginHorizontal: 'auto',
     width: '100%',
-    maxWidth: 400
+    maxWidth: 400,
   },
   indicator: {
     borderColor: 'grey',
@@ -96,28 +90,28 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   temp: {
-    width: 45,
-    display: 'flex'
+    width: 40,
+    display: 'flex',
+    justifyContent: "flex-end"
   },
   pressure: {
-    width: 65,
-    display: 'flex'
+    width: 55,
+    display: 'flex',
+    justifyContent: "flex-end"
   },
   wind: {
-    width: 65,
-    display: 'flex'
+    width: 54,
+    display: 'flex',
+    justifyContent: "flex-end"
   },
   hour: {
-    width: 30
+    width: 24,
   },
   day: {
     display: 'flex',
     alignSelf: 'center'
   },
-  textWhite: {
-    color: 'white'
-  },
-  textGrey: {
-    color: 'grey'
+  mono: {
+    fontFamily: "monospace"
   }
 })

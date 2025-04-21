@@ -1,49 +1,88 @@
 export interface Forecast {
-  time: string
-  temperature_2m: number
-  windspeed_10m: number
-  weatherCode: number
-  pressure: number
+  time: string;
+  temperature_2m: number;
+  windspeed_10m: number;
+  weatherCode: number;
+  pressure: number;
 }
 
 export interface Weather {
-  latitude: number
-  longitude: number
-  generationtime_ms: number
-  utc_offset_seconds: number
-  timezone: string
-  timezone_abbreviation: string
-  elevation: number
-  current_weather: CurrentWeather
-  hourly_units: HourlyUnits
-  hourly: HourlyWeather
+  latitude: number;
+  longitude: number;
+  generationtime_ms: number;
+  utc_offset_seconds: number;
+  timezone: string;
+  timezone_abbreviation: string;
+  elevation: number;
+  current: Current;
+  current_units: CurrentUnits;
+  hourly: Hourly;
+  hourly_units: HourlyUnits;
+  daily_units: DailyUnits;
+  daily: Daily;
 }
 
-export interface CurrentWeather {
-  temperature: number
-  windspeed: number
-  winddirection: number
-  weathercode: number
-  is_day: number
-  time: string
+export interface Current {
+  cloud_cover: number;
+  interval: number;
+  is_day: number;
+  precipitation: number;
+  relative_humidity_2m: number;
+  surface_pressure: number;
+  temperature_2m: number;
+  time: string;
+  weather_code: number;
+  wind_speed_10m: number;
+  wind_direction_10m: number;
+}
+export interface CurrentUnits {
+  cloud_cover: string;
+  interval: string;
+  is_day: string;
+  precipitation: string;
+  relative_humidity_2m: string;
+  surface_pressure: string;
+  temperature_2m: string;
+  time: string;
+  weather_code: string;
+  wind_speed_10m: string;
+  wind_direction_10m: string;
 }
 
 export interface HourlyUnits {
-  time: string
-  temperature_2m: string
-  precipitation_probability: string
-  rain: string
-  cloudcover: string
-  windspeed_10m: string
+  cloudcover: string;
+  precipitation: string;
+  rain: string;
+  surface_pressure: string;
+  temperature_2m: string;
+  time: string;
+  weathercode: string;
+  wind_direction_10m: string;
+  windspeed_10m: string;
 }
 
-export interface HourlyWeather {
-  time: string[]
-  temperature_2m: number[]
-  precipitation_probability: number[]
-  rain: number[]
+export interface Hourly {
   cloudcover: number[]
-  windspeed_10m: number[]
-  weathercode: number[]
+  precipitation: number[]
+  rain: number[]
   surface_pressure: number[]
+  temperature_2m: number[]
+  time: string[]
+  weathercode: number[]
+  wind_direction_10m: number[]
+  windspeed_10m: number[]
 }
+
+interface Daily {
+  daylight_duration: number[];
+  sunrise: string[];
+  sunset: string[];
+  time: string[];
+};
+
+export interface DailyUnits {
+  daylight_duration: string;
+  sunrise: string;
+  sunset: string;
+  time: string;
+};
