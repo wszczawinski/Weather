@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { StyleSheet } from 'react-native'
 
-import { TemperatureIndicator } from './TemperatureIndicator'
+import { Indicator } from './Indicator'
 import { WeatherIcon } from './WeatherIcon'
 import { ThemedText } from './ThemedText'
 import { ThemedView } from './ThemedView'
@@ -22,7 +22,6 @@ export const ForecastItem = ({
   pressure
 }: ForecastItemProps) => {
   const getDay = () => (moment(time).isSame(new Date(), 'day') ? 'Today' : moment(time).format('dddd   DD MMMM'))
-
   const getTime = () => `${moment(time).format('HH')}h`
 
   return (
@@ -35,13 +34,7 @@ export const ForecastItem = ({
 
           <ThemedText type='small' style={[styles.hour, styles.mono]}>{getTime()}</ThemedText>
 
-          <ThemedView style={styles.indicator}>
-            <TemperatureIndicator
-              maxTemp={maxTemp}
-              minTemp={minTemp}
-              temperature={temperature_2m}
-            />
-          </ThemedView>
+          <Indicator max={maxTemp} min={minTemp} value={temperature_2m} />
         </ThemedView>
 
         <ThemedView style={styles.forecastInfoElement}>
@@ -68,13 +61,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     width: '100%',
     maxWidth: 400,
-  },
-  indicator: {
-    borderColor: 'grey',
-    borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
   },
   forecastInfo: {
     display: 'flex',

@@ -1,3 +1,5 @@
 export * from './Colors'
 
-export const TEMP_INDICATOR_LENGTH = 24
+export const SECONDS_IN_DAY = 86400;
+
+export const INDICATOR_LENGTH = 24

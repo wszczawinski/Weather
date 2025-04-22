@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { AntDesign, Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 import { SafeAreaView, StyleSheet } from "react-native";
-import moment from "moment";
+import { AntDesign, Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { WeatherIcon } from "@/components/WeatherIcon";
 import { NoDataScreen } from "@/components/NoDataScreen";
+import { useWeatherQuery } from "@/hooks/useWeatherQuery";
+import { DayNightProgress } from "@/components/DayNightProgress";
 import { LocationContext, LocationStatus } from "@/contexts/LocationContext";
 
 export default function CurrentWeather() {
@@ -21,32 +21,17 @@ export default function CurrentWeather() {
     longitude: location.longitude,
     enabled: locationStatus === LocationStatus.READY
   })
-  console.log("🚀 -> CurrentWeather -> weather:", weather)
 
   if (!weather || isError) {
     return <NoDataScreen />
   }
 
-  const { current: currentWeather, elevation, current_units: units, daily, daily_units } = weather;
+  const { current: currentWeather, elevation, current_units: units, daily } = weather;
   const styles = style(currentWeather.wind_direction_10m)
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <ThemedView style={styles.container}>
-        <ThemedText style={styles.row}>
-          <Feather name="sunrise" size={24} />
-          {moment(daily.sunrise[0]).format("HH:mm")}
-
-          <ThemedText >
-            <Feather name="arrow-left" size={16} />
-            {moment.utc(daily.daylight_duration[0] * 1000).format("HH:mm")}
-            <Feather name="arrow-right" size={16} />
-          </ThemedText>
-
-          {moment(daily.sunset[0]).format("HH:mm")}
-          <Feather name="sunset" size={24} />
-        </ThemedText>
-      </ThemedView>
+      <DayNightProgress sunset={daily.sunset[0]} sunrise={daily.sunrise[0]} daylightDuration={daily.daylight_duration[0]} />
 
       <ThemedView style={styles.container}>
         <WeatherIcon
@@ -93,9 +78,6 @@ export default function CurrentWeather() {
             {Math.round(currentWeather.cloud_cover)} {units.cloud_cover}
           </ThemedText>
         </ThemedView>
-
-
-
       </ThemedView>
     </SafeAreaView>
   )

@@ -7,7 +7,7 @@ import { NoDataScreen } from "@/components/NoDataScreen";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { ForecastItem } from "@/components/ForecastItem";
-import { Forecast } from '@/types'
+import { Forecast } from '@/types';
 
 const EmptyForecastList = () => {
   return (
