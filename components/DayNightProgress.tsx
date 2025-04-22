@@ -49,11 +49,15 @@ export const DayNightProgress = ({ sunset, sunrise, daylightDuration }: DayNight
 
     const isDay = nowSeconds > sunriseSeconds && nowSeconds < sunsetSeconds;
 
+    const nightIndicatorValue = nowSeconds > sunsetSeconds
+        ? nowSeconds - sunsetSeconds
+        : nightDuration - (sunriseSeconds - nowSeconds)
+
     return (
         <ThemedView style={styles.wrapper} >
             {isDay ?
                 <>
-                    <Indicator min={0} max={daylightDuration} value={Math.abs(nowSeconds - sunriseSeconds)} indicatorLength={65} />
+                    <Indicator min={0} max={daylightDuration} value={nowSeconds - sunriseSeconds} indicatorLength={65} />
                     <ThemedText style={styles.row}>
                         <IconTime time={sunrise} iconName="sunrise" />
 
@@ -64,7 +68,7 @@ export const DayNightProgress = ({ sunset, sunrise, daylightDuration }: DayNight
                 </>
                 :
                 <>
-                    <Indicator min={0} max={nightDuration} value={Math.abs(nowSeconds - sunsetSeconds)} indicatorLength={65} />
+                    <Indicator min={0} max={nightDuration} value={nightIndicatorValue} indicatorLength={65} />
                     <ThemedText style={styles.row}>
                         <IconTime time={sunset} iconName="sunset" />
 
