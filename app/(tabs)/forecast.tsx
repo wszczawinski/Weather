@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { FlatList, ListRenderItemInfo, SafeAreaView, StyleSheet, View } from "react-native";
+import moment from "moment";
 
 import { LocationContext, LocationStatus } from "@/contexts/LocationContext";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
@@ -33,28 +34,31 @@ export default function ForecastTab() {
     return <NoDataScreen />
   }
 
-  const { hourly } = weather;
+  const { hourly, daily } = weather;
 
-  const forecastElements = hourly.time.map((item, index) => {
+  const getIsDay = (time: string, index: number) => moment(time).isAfter(daily.sunrise[index]) && moment(time).isBefore(daily.sunset[index])
+
+  const forecastElements: Forecast[] = hourly.time.map((item, index) => {
     return {
       time: item,
+      isDay: getIsDay(item, Math.floor(index / 24)),
       temperature_2m: hourly.temperature_2m[index],
       windspeed_10m: hourly.windspeed_10m[index],
       weatherCode: hourly.weathercode[index],
-      pressure: hourly.surface_pressure[index]
+      surface_pressure: hourly.surface_pressure[index],
+      cloudcover: hourly.cloudcover[index],
+      precipitation: hourly.precipitation[index],
+      rain: hourly.rain[index],
+      wind_direction_10m: hourly.wind_direction_10m[index],
     }
   })
 
   const renderItem = ({ item: forecast }: ListRenderItemInfo<Forecast>) => {
     return (
       <ForecastItem
-        time={forecast.time}
-        windspeed_10m={forecast.windspeed_10m}
-        temperature_2m={forecast.temperature_2m}
-        weatherCode={forecast.weatherCode}
+        forecast={forecast}
         minTemp={Math.min(...hourly.temperature_2m)}
         maxTemp={Math.max(...hourly.temperature_2m)}
-        pressure={forecast.pressure}
       />
     )
   }

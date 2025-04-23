@@ -1,9 +1,13 @@
 export interface Forecast {
   time: string;
+  isDay: boolean;
   temperature_2m: number;
   windspeed_10m: number;
   weatherCode: number;
-  pressure: number;
+  surface_pressure: number;
+  precipitation: number;
+  cloudcover: number;
+  wind_direction_10m: number;
 }
 
 export interface Weather {
