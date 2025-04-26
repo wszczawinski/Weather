@@ -22,7 +22,6 @@ export const ForecastItem = ({
   const { isDay, cloudcover, precipitation, surface_pressure, temperature_2m, time, weatherCode, windspeed_10m, wind_direction_10m } = forecast;
   const isToday = moment(time).isSame(new Date(), 'day')
   const isCurrentHour = isToday && moment().isSame(time, "hour");
-  console.log("🚀 -> isCurrentHour:", isCurrentHour)
 
   const getDay = () => isToday ? 'Today' : moment(time).format('ddd   DD MMMM')
   const getTime = () => `${moment(time).format('HH')}`
@@ -77,12 +76,11 @@ export const ForecastItem = ({
             {Math.round(surface_pressure)}
           </ThemedText>
           <ThemedText type='small' style={[styles.infoRain, styles.mono]}>
-            {Math.round(precipitation)}
+            {precipitation.toFixed(1)}
           </ThemedText>
           <ThemedText type='small' style={[styles.info, styles.mono]}>
             {Math.round(cloudcover)}
           </ThemedText>
-
           <ThemedText type='small' style={[styles.infoWind, styles.mono]}>
             <AntDesign style={stylesWind.windDirection} name="arrowup"  size={12} color="white" />
             {Math.round(windspeed_10m)}

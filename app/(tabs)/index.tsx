@@ -55,29 +55,27 @@ export default function CurrentWeather() {
             {currentWeather.wind_speed_10m} {units.wind_speed_10m}
           </ThemedText>
         </ThemedView>
+        <ThemedText type="subtitle" style={styles.row}>
+          <MaterialCommunityIcons name="elevation-rise" size={18} />
+          {elevation} {'m'}
+        </ThemedText>
       </ThemedView>
 
       <ThemedView style={styles.container}>
+        <ThemedText style={styles.row}>
+          <Entypo name="water" size={12} />
+          {currentWeather.precipitation.toFixed(1)} {units.precipitation}
 
-        <ThemedView style={styles.row}>
-          <ThemedText style={styles.row}>
-            <MaterialCommunityIcons name="elevation-rise" size={18} />
-            {elevation} {'m'}
-            <Entypo name="minus" size={16} color="gray" />
-            <AntDesign name="dashboard" size={16} />
-            {Math.round(currentWeather.surface_pressure)} {units.surface_pressure}
-          </ThemedText>
-        </ThemedView>
+          <Entypo name="minus" size={10} color="gray" />
 
-        <ThemedView style={styles.row}>
-          <ThemedText style={styles.row}>
-            <Entypo name="water" size={12} />
-            {currentWeather.precipitation} {units.precipitation}
-            <Entypo name="minus" size={16} color="gray" />
-            <MaterialCommunityIcons name="weather-partly-cloudy" size={18} />
-            {Math.round(currentWeather.cloud_cover)} {units.cloud_cover}
-          </ThemedText>
-        </ThemedView>
+          <MaterialCommunityIcons name="weather-partly-cloudy" size={18} />
+          {Math.round(currentWeather.cloud_cover)} {units.cloud_cover}
+
+          <Entypo name="minus" size={10} color="gray" />
+
+          <AntDesign name="dashboard" size={16} />
+          {Math.round(currentWeather.surface_pressure)} {units.surface_pressure}
+        </ThemedText>
       </ThemedView>
     </SafeAreaView>
   )
@@ -96,7 +94,8 @@ const style = (winddirection: number) =>
       alignItems: 'center',
       justifyContent: 'center',
       gap: 20,
-      padding: 20
+      padding: 20,
+      paddingBottom: 60
     },
     row: {
       display: 'flex',
