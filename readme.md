@@ -3,8 +3,8 @@
 </h2>
 
 <p align="center">  
-  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/images/WeatherMain.PNG" width="240" /> 
-  <img alt="WeatherAppMainScreen" src="https://github.com/wszczawinski/Weather/blob/main/images/WeatherForecast.PNG" width="240" />
+  <img alt="WeatherAppMainScreen" src="./images/WeatherMain.PNG" width="240" /> 
+  <img alt="WeatherAppMainScreen" src="./images/WeatherForecast.PNG" width="240" />
 </p> 
 
 ## Stack
